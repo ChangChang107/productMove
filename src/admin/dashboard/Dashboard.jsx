@@ -21,47 +21,42 @@ export default function AdminDashboard() {
 	<>
 	  <div className="grid lg:grid-cols-2 gap-5 mb-5">
 	  	
-        <div className="rounded bg-white h-96 shadow-sm pt-10">
-			{/* <div className="rounded-lg bg-gray-200 w-4/5 m-3 ml-5">
-				<div className="flex">
-					<Textfield name="select-month" className="w-full bg-white pl-2 text-base font-semibold outline-0" placeholder="month-year" elemAfterInput={
-						<Button isDisabled={!textInput} appearance="primary" onClick={onAddBtnClick}>Select</Button>
-					} 
-					css={{ padding: "2px 4px 2px"}}
-					value={textInput}
-					onChange={onTextInputChange}
-					></Textfield>
+	  <div className="rounded bg-white h-96 shadow-sm">
+					<div className="rounded-lg bg-gray-200 w-4/5 p-2 m-3 ml-5">
+						<div className="flex">
+							<input type="text"  className="w-full bg-white pl-2 text-base font-semibold outline-0" placeholder="month/year" id="" />
+							<input type="button" value="Select" className="bg-green-500 p-2 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-green-800 transition-colors"/>
+						</div>
+					</div>
+					<div className='p-2 h-64'> 
+						<ResponsiveContainer width="80%" aspect={2}>
+							<PieChart width={400} height={400}>
+							<Pie
+								data={PieIconA}
+								cx="50%"
+								cy="55%"
+								outerRadius={90}
+								label
+							>
+								{PieIconA.map((entry, index) => (
+								<Cell key={`cell-${index}`} fill={COLORS1[index % COLORS1.length]} />
+								))}
+							</Pie>
+							<Tooltip />
+							<Legend 
+							verticalAlign="top"
+							align = "right"
+							layout='vertical'
+							/>
+							</PieChart>
+						</ResponsiveContainer>
+					</div>
+					<div class="flex flex-col items-center justify-center text-center space-y-2 mt-2">
+						<div class="font-semibold text-xl">
+							<p>Bảng thống kê trạng thái sản phẩm</p>
+						</div>
+					</div>
 				</div>
-			</div> */}
-			<div className='h-64' id='statusChart'> 
-				<ResponsiveContainer width="80%" aspect={2}>
-					<PieChart width={400} height={400}>
-					<Pie
-						data={PieIconA}
-						cx="50%"
-						cy="55%"
-						outerRadius={90}
-						label
-					>
-						{PieIconA.map((entry, index) => (
-						<Cell key={`cell-${index}`} fill={COLORS1[index % COLORS1.length]} />
-						))}
-					</Pie>
-					<Tooltip />
-					<Legend 
-					verticalAlign="top"
-					align = "right"
-					layout='vertical'
-					/>
-					</PieChart>
-				</ResponsiveContainer>
-			</div>
-			<div class="flex flex-col items-center justify-center text-center space-y-2 mt-12">
-				<div class="font-semibold text-xl">
-					<p>Biểu đồ thống kê trạng thái sản phẩm</p>
-				</div>
-			</div>
-		</div>
 
         <div className="rounded bg-white h-96 shadow-sm">
 			<div className='pl-0 pt-10 items-center h-80'> 
@@ -98,9 +93,21 @@ export default function AdminDashboard() {
 
       <div className="grid lg:grid-cols-2 gap-5 mb-5 h-96">
 
-		<div className="rounded bg-white shadow-sm pt-5">
-			
-			<div className='pl-10 pt-20 items-center h-80'> 
+	  <div className="rounded bg-white shadow-sm pt-5">
+			<div className="rounded-lg bg-gray-200 w-4/5 p-2 m-3 ml-5">
+				<div className="flex">
+					<input type="text"  className="w-full bg-white pl-2 text-base font-semibold outline-0" placeholder="year" id="" 
+					// value={textInput02} onChange={(e)=>setTextInput02(e.target.value)}
+					/>
+					<input type="button" value="Select" className="bg-green-500 p-2 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-green-800 transition-colors"
+					// onClick={(e)=>{
+					// 	e.preventDefault()
+					// 	getData3(textInput02)
+					// }}
+					/>
+				</div>
+			</div>
+			<div className='pl-10 pt-5 items-center'> 
 				<ResponsiveContainer width="80%" aspect={2}>
 					<BarChart width={50} height={20} data={PieIconB}>
 						<XAxis dataKey="date" tickFormatter={monthTickFormatter} />
@@ -123,7 +130,7 @@ export default function AdminDashboard() {
 			</div>
 			<div class="flex flex-col items-center justify-center text-center space-y-2 mt-2">
 				<div class="font-semibold text-xl">
-					<p>Biểu đồ thống kê sản phẩm toàn quốc theo tháng</p>
+					<p>Biểu đồ thống kê sản phẩm theo tháng</p>
 				</div>
 			</div>
 		</div>

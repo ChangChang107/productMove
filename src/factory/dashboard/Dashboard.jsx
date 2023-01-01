@@ -1,71 +1,75 @@
-import React, { PureComponent } from 'react';
-import { IoBagHandle, IoPieChart, IoPeople, IoCart } from 'react-icons/io5'
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { PieChart, Pie, BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { PieIconE, PieIconF, PieIconG, PieIconH } from '../../components/shared/icon';
+import { PieIconA, PieIconF, PieIconG, PieIconH } from '../../components/shared/icon';
+import axios from 'axios';
+
+let reqInstance = axios.create({
+  headers: {
+    cookie : `token=${localStorage.getItem('token')}`
+    }
+})
 
 const COLORS1 = ['#0088FE', '#00C49F', '#FFBB28'];
 const COLORS2 = ['#c57792','#77c5bf', '#0088FE', '#00C49F','#d62728', '#FFBB28', '#9467bd','#8c564b','#e377c2','#ff7f0e'];
 
 export default function FactoryDashboard() {
+
+	const[textInput01, setTextInput01] = useState("");
+	const[textInput02, setTextInput02] = useState("");
+	
+
   return (
 	<>
 
 	  <div className="grid lg:grid-cols-2 gap-5 mb-5">
 	  	
-        <div className="rounded bg-white h-96 shadow-sm">
-			<div className="rounded-lg bg-gray-200 w-4/5 p-2 m-3 ml-5">
-				<div className="flex">
-					<input type="text"  className="w-full bg-white pl-2 text-base font-semibold outline-0" placeholder="month/year" id="" />
-					<input type="button" value="Select" className="bg-blue-500 p-2 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-blue-800 transition-colors"/>
+	  <div className="rounded bg-white h-96 shadow-sm">
+					<div className="rounded-lg bg-gray-200 w-4/5 p-2 m-3 ml-5">
+						<div className="flex">
+							<input type="text"  className="w-full bg-white pl-2 text-base font-semibold outline-0" placeholder="month/year" id="" 
+							value={textInput01} onChange={(e)=>setTextInput01(e.target.value)}
+							/>
+							<input type="button" value="Select" className="bg-green-500 p-2 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-green-800 transition-colors" 
+							onClick={(e)=>{
+								e.preventDefault()
+								getData1(textInput01)
+							}}
+							/>
+						</div>
+					</div>
+					<div className='p-2 h-64'> 
+						<ResponsiveContainer width="80%" aspect={2}>
+							<PieChart width={400} height={400}>
+							<Pie
+								data={PieIconA}
+								cx="50%"
+								cy="55%"
+								outerRadius={90}
+								label
+							>
+								{PieIconA.map((entry, index) => (
+								<Cell key={`cell-${index}`} fill={COLORS1[index % COLORS1.length]} />
+								))}
+							</Pie>
+							<Tooltip />
+							<Legend 
+							verticalAlign="top"
+							align = "right"
+							layout='vertical'
+							/>
+							</PieChart>
+						</ResponsiveContainer>
+					</div>
+					<div class="flex flex-col items-center justify-center text-center space-y-2 mt-2">
+						<div class="font-semibold text-xl">
+							<p>Bảng thống kê trạng thái sản phẩm</p>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div className='h-64' id='statusChart'> 
-				<ResponsiveContainer width="80%" aspect={2}>
-					<PieChart width={400} height={400}>
-					<Pie
-						data={PieIconE}
-						cx="50%"
-						cy="55%"
-						outerRadius={90}
-						label
-					>
-						{PieIconE.map((entry, index) => (
-						<Cell key={`cell-${index}`} fill={COLORS1[index % COLORS1.length]} />
-						))}
-					</Pie>
-					<Tooltip />
-					<Legend 
-					verticalAlign="top"
-					align = "right"
-					layout='vertical'
-					/>
-					</PieChart>
-				</ResponsiveContainer>
-			</div>
-			<div class="flex flex-col items-center justify-center text-center space-y-2 mt-2">
-				<div class="font-semibold text-xl">
-					<p>Biểu đồ thống kê trạng thái sản phẩm</p>
-				</div>
-			</div>
-		</div>
 
         <div className="rounded bg-white shadow-sm">
-			<div className="rounded-lg bg-gray-200 w-4/5 p-2 m-3 ml-5">
-				<div className="flex">
-					<select
-					type="number"
-					name="status"
-					id="status"
-					class="w-full bg-white pl-2 text-base font-semibold outline-0 h-9"
-					>
-						<option value="type">Dòng sản phẩm</option>
-						<option value="factory">Cơ sở sản xuất</option>
-						<option value="store">Đại lí phân phối</option>
-					</select>
-				</div>
-			</div>
-			<div className=' items-center'> 
+			<div className=' items-center pt-20'> 
 				<ResponsiveContainer width="90%" aspect={2}>
 					<BarChart
 					width={500}
@@ -90,7 +94,7 @@ export default function FactoryDashboard() {
 			</div>
 			<div class="flex flex-col items-center justify-center text-center space-y-2 mb-4">
 				<div class="font-semibold text-xl">
-					<p>Biểu đồ thống kê tỉ lệ sản phẩm bị lỗi</p>
+					<p>Biểu đồ thống kê tỉ lệ sản phẩm bị lỗi theo dòng sản phẩm</p>
 				</div>
 			</div>
 		</div>
@@ -101,8 +105,15 @@ export default function FactoryDashboard() {
 		<div className="rounded bg-white shadow-sm pt-5">
 			<div className="rounded-lg bg-gray-200 w-4/5 p-2 m-3 ml-5">
 				<div className="flex">
-					<input type="text"  className="w-full bg-white pl-2 text-base font-semibold outline-0" placeholder="year" id="" />
-					<input type="button" value="Select" className="bg-blue-500 p-2 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-blue-800 transition-colors"/>
+					<input type="text"  className="w-full bg-white pl-2 text-base font-semibold outline-0" placeholder="year" id="" 
+					value={textInput02} onChange={(e)=>setTextInput02(e.target.value)}
+					/>
+					<input type="button" value="Select" className="bg-green-500 p-2 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-green-800 transition-colors"
+					onClick={(e)=>{
+						e.preventDefault()
+						getData3(textInput02)
+					}}
+					/>
 				</div>
 			</div>
 			<div className='pl-10 pt-5 items-center'> 
@@ -158,6 +169,306 @@ export default function FactoryDashboard() {
   )
 }
 
+// lấy dữ liệu vào biểu đồ thống kê sản phẩm theo trạng thái
+const getData1 = (textInput) => {
+	
+	const date = textInput.split("-");
+	const year = parseInt(date[0])
+	const month = parseInt(date[1])
+	let data01 = 0;
+	let data02 = 0;
+	let data03 = 0;
+
+	axios.get('http://localhost:8000/factory/products/product-in-year?year=2022&month=2&status=1', {
+		  withCredentials:true,
+		  headers:{
+			'authorization': `${localStorage.getItem('token')}`
+		  }
+		}).then(res => {
+			data01 = res.data.amount
+			console.log(data01)
+		}).catch(err => {
+		  console.log(err)
+		});
+
+	axios.get('http://localhost:8000/factory/products/product-in-year?year=2022&month=2&status=3', {
+		withCredentials:true,
+		headers:{
+			'authorization': `${localStorage.getItem('token')}`
+		}
+		}).then(res => {
+			data02 = res.data.amount
+			console.log(data01)
+		}).catch(err => {
+		console.log(err)
+		});
+	axios.get('http://localhost:8000/factory/products/product-in-year?year=2022&month=2&status=8', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data01 = res.data.amount
+		console.log(data03)
+	}).catch(err => {
+		console.log(err)
+	});
+	
+	const data = [
+		{
+			name: 'Mới sản xuất',
+			numberProduct: data01
+		},
+		{
+			name: 'Đã bán',
+			numberProduct: data02
+		},
+		{
+			name: 'Đã thu hồi',
+			numberProduct: data03
+		}
+	]
+	return data
+  };
+
+// lấy dữ liệu vào biểu đồ thống kê sản phẩm theo tháng
+const getData3 = (textInput) => {
+	const year = parseInt(textInput)
+	let data01 = 0;
+	let data02 = 0;
+	let data03 = 0;
+	let data04 = 0;
+	let data05 = 0;
+	let data06 = 0;
+	let data07 = 0;
+	let data08 = 0;
+	let data09 = 0;
+	let data10 = 0;
+	let data11 = 0;
+	let data12 = 0;
+	
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=1&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data01 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=2&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data02 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=3&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data03 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=4&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data04 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=5&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data05 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=6&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data06 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=7&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data07 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=8&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data08 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=9&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data09 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=10&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data10 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=11&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data11 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+	axios.get('http://localhost:8000/factory/products/product-in-month?year=2022&month=12&status=1', {
+		withCredentials:true,
+		headers:{
+		'authorization': `${localStorage.getItem('token')}`
+		}
+	}).then(res => {
+		data12 = res.data.amount
+	}).catch(err => {
+		console.log(err)
+	});
+
+	const data = [
+		{ 
+			date: textInput + '-01',
+			numberProduct: data01
+		  },
+		  {
+			date: textInput + '-02',
+			numberProduct: data02
+		  },
+		  {
+			date: textInput + '-03',
+			numberProduct: data03
+		  },
+		  {
+			date: textInput + '-04',
+			numberProduct: data04
+		  },
+		  {
+			date: textInput + '-05',
+			numberProduct: data05
+		  },
+		  {
+			date: textInput + '-06',
+			numberProduct: data06
+		  },
+		  {
+			date: textInput + '-07',
+			numberProduct: data07
+		  },
+		  {
+			date: textInput + '-08',
+			numberProduct: data08
+		  },
+		  {
+			date: textInput + '-09',
+			numberProduct: data09
+		  },
+		  {
+			date: textInput + '-10',
+			numberProduct: data10
+		  },
+		  {
+			date: textInput + '-11',
+			numberProduct: data11
+		  },
+		  {
+			date: textInput + '-12',
+			numberProduct: data12
+		  }
+	]
+
+	return data;
+};
+
+// lấy dữ liệu cho biểu đồ thống kê sản phẩm nhập vào theo năm 
+const getData4 = () => {
+	let data01 = 0
+	let data02 = 0
+	let data03 = 0
+
+	axios.get('http://localhost:8000/factory/products/product-in-year?year=2022&status=1', {
+		withCredentials:true,
+		headers:{
+			'authorization': `${localStorage.getItem('token')}`
+		}
+		}).then(res => {
+			data01 = res.data.amount
+		}).catch(err => {
+		console.log(err)
+		});
+	axios.get('http://localhost:8000/factory/products/product-in-year?year=2021&status=1', {
+		withCredentials:true,
+		headers:{
+			'authorization': `${localStorage.getItem('token')}`
+		}
+		}).then(res => {
+			data02 = res.data.amount
+		}).catch(err => {
+		console.log(err)
+		});
+	axios.get('http://localhost:8000/factory/products/product-in-year?year=2020&status=1', {
+		withCredentials:true,
+		headers:{
+			'authorization': `${localStorage.getItem('token')}`
+		}
+		}).then(res => {
+			data03 = res.data.amount
+		}).catch(err => {
+		console.log(err)
+		});
+
+	const data = [
+		{ date: '2020',
+		numberProduct: data03 },
+		{ date: '2021',
+		numberProduct: data02 },
+		{ date: '2022',
+		numberProduct: data01 }
+	]
+}
+
 function BoxWrapper({ children }) {
 	return <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center">{children}</div>
 }
@@ -209,3 +520,8 @@ y: PropTypes.number,
 width: PropTypes.number,
 height: PropTypes.number,
 };
+
+
+
+
+

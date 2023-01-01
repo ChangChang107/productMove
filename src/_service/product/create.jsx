@@ -16,10 +16,11 @@ export default function CreateServiceProduct() {
     const [useroutid,setUseroutid]=useState('')
     const [type,setType]=useState('')
     const [color,setColor]=useState('')
-    const [weight,setWeight]=useState('')
-    const [height,setHeight]=useState('')
-    const [expiry,setExpiry]=useState('')
-    const [quantity,setQuantity]=useState('')
+    const [weight,setWeight]=useState(0)
+    const [height,setHeight]=useState(0)
+    const [expiry,setExpiry]=useState(0)
+    const [quantity,setQuantity]=useState(0)
+    const [_status,setStatus]=useState(4)
 
     const create =async ()=>{
         const res = await axios.post(
@@ -33,7 +34,8 @@ export default function CreateServiceProduct() {
                 weight,
                 height,
                 expiry,
-                quantity
+                quantity,
+                _status
             },
             {
                 withCredentials: true,
@@ -166,7 +168,7 @@ export default function CreateServiceProduct() {
                 Useroutid
                 </label>
                 <input
-                type="number"
+                type="text"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#46bd5e] focus:shadow-md"
                 value={useroutid} onChange={(e)=>setUseroutid(e.target.value)}
                 />
@@ -176,6 +178,7 @@ export default function CreateServiceProduct() {
                 class="mr-5 mt-5 mb-5 hover:shadow-form rounded-md bg-green-500 py-3 px-8 text-base font-semibold text-white outline-none"
                 onClick={(e)=>{
                     e.preventDefault()
+
                     create()
                 }}
                 >

@@ -1,6 +1,57 @@
-import React from 'react'
+import React,  { useState } from 'react'
+import axios from 'axios';
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-export default function SellProduct() {
+let reqInstance = axios.create({
+    headers: {
+      cookie : `token=${localStorage.getItem('token')}`
+      }
+  })
+
+export default function ExportStoreProduct() {
+
+    const navigate = useNavigate();
+    const [name,setName]=useState('')
+    const [modelname,setModelname]=useState('')
+    const [userinid,setUserinid]=useState('')
+    const [type,setType]=useState('')
+    const [color,setColor]=useState('')
+    const [weight,setWeight]=useState(0)
+    const [height,setHeight]=useState(0)
+    const [expiry,setExpiry]=useState(0)
+    const [quantity,setQuantity]=useState(0)
+    const [_status,setStatus]=useState(0)
+
+    const exportProduct =async ()=>{
+        const res = await axios.post(
+            'http://localhost:8000/store/products/sell',
+            {
+                modelname,
+                name,
+                userinid,
+                type,
+                color,
+                weight,
+                height,
+                expiry,
+                quantity,
+                _status
+            },
+            {
+                withCredentials: true,
+                headers: {
+                    authorization: `${localStorage.getItem('token')}`
+                }
+            }
+        )
+
+
+          navigate('/store/products')
+
+        
+        
+    }
+
   return (
     <div class="mx-auto w-full max-w-[550px]">
         <form method="POST">
@@ -9,48 +60,146 @@ export default function SellProduct() {
                 for="name"
                 class="mb-3 block text-base font-medium text-[#07074D]"
                 >
-                Name Customer
+                Model Name
                 </label>
                 <input
                 type="text"
-                name="name"
-                id="name"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#46bd5e] focus:shadow-md"
+                value={modelname} onChange={(e)=>setModelname(e.target.value)}
                 />
             </div>
             <div class="mb-5">
                 <label
-                for="phone"
+                for="name"
                 class="mb-3 block text-base font-medium text-[#07074D]"
                 >
-                Số điện thoại
+                Name
+                </label>
+                <input
+                type="text"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#46bd5e] focus:shadow-md"
+                value={name} onChange={(e)=>setName(e.target.value)}
+                />
+            </div>
+            <div class="mb-5">
+                <label
+                for="type"
+                class="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                Type
+                </label>
+                <input
+                type="text"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#46bd5e] focus:shadow-md"
+                value={type} onChange={(e)=>setType(e.target.value)}
+                />
+            </div>
+            <div class="mb-5">
+                <label
+                for="color"
+                class="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                Color
+                </label>
+                <input
+                type="text"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#46bd5e] focus:shadow-md"
+                value={color} onChange={(e)=>setColor(e.target.value)}
+                />
+            </div>
+            <div class="mb-5">
+                <label
+                for="weight"
+                class="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                Weight
                 </label>
                 <input
                 type="number"
-                name="phone"
-                id="phone"
+                placeholder="Enter Weight"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#46bd5e] focus:shadow-md"
+                value={weight} onChange={(e)=>setWeight(e.target.value)}
                 />
+            </div>
+            <div class="mb-5">
+                <label
+                for="height"
+                class="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                Height
+                </label>
+                <input
+                type="number"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#46bd5e] focus:shadow-md"
+                value={height} onChange={(e)=>setHeight(e.target.value)}
+                />
+            </div>
+            <div class="mb-5">
+                <label
+                for="expiry"
+                class="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                Expiry
+                </label>
+                <input
+                type="number"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#46bd5e] focus:shadow-md"
+                value={expiry} onChange={(e)=>setExpiry(e.target.value)}
+                />
+            </div>
+            <div class="mb-5">
+                <label
+                for="expiry"
+                class="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                Quantity
+                </label>
+                <input
+                type="number"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#46bd5e] focus:shadow-md"
+                value={quantity} onChange={(e)=>setQuantity(e.target.value)}
+                />
+            </div>
+            <div class="mb-5">
+                <label
+                for="status"
+                class="mb-3 block text-base font-medium text-[#07074D]"
+                >
+                Status
+                </label>
+                <select
+                type="number"
+                id="status"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#46bd5e] focus:shadow-md"
+                value={_status} onChange={(e)=>setStatus(e.target.value)}
+                >
+                    <option value="3">Bán</option>
+                    <option value="12">Trả lại khách hàng</option>
+                </select>
             </div>
             <div class="mb-5">
                 <label
                 for="amount"
                 class="mb-3 block text-base font-medium text-[#07074D]"
                 >
-                Amount
+                UserInId
                 </label>
                 <input
-                type="number"
-                name="amount"
-                id="amount"
+                type="text"
                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#46bd5e] focus:shadow-md"
+                value={userinid} onChange={(e)=>setUserinid(e.target.value)}
                 />
             </div>
             <div>
                 <button
                 class="mr-5 mt-5 mb-5 hover:shadow-form rounded-md bg-green-500 py-3 px-8 text-base font-semibold text-white outline-none"
+                onClick={(e)=>{
+                    e.preventDefault()
+
+                    exportProduct()
+                }}
                 >
-                Sell
+                Export
                 </button>
             </div>
         </form>
