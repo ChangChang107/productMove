@@ -45,7 +45,12 @@ export default class FactoryProducts extends Component {
           <div>
             <h1 className='text-2xl font-semibold leading-relaxed text-gray-800'>Products</h1>
           </div>
-          
+          <Link to='/factory/products/create'>
+            <button className='inline-flex gap-x-2 items-center py-2.5 px-6 text-white bg-green-500 rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:bg-green-600 focus:ring-offset-1'>
+              <FiPlus className='w-6 h-6 fill-current' />
+              <span className='text-sm font-semibold tracking-wide'>Add Product</span>
+            </button>
+          </Link>
         </div>
         <div className='mb-5' >
           <div class="border border-gray-300 p-6 grid grid-cols-1 gap-6 bg-white rounded-lg">
@@ -83,7 +88,7 @@ export default class FactoryProducts extends Component {
               <th scope="col" className="px-6 py-3">Weight</th>
               <th scope="col" className="px-6 py-3">Height</th>
               <th scope="col" className="px-6 py-3">Expiry</th>
-              <th scope="col" className="px-6 py-3">Quantity</th>
+              <th scope="col" className="px-6 py-3">Amount</th>
               <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Edit</span>
               </th>

@@ -48,8 +48,6 @@ export default function CreateFactoryProduct() {
 
           navigate('/factory/products')
 
-        
-        
     }
 
   return (
