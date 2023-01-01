@@ -23,18 +23,30 @@ export default function CreateStoreProduct() {
     const [_status,setStatus]=useState('')
 
     const create =async ()=>{
-        const res = await axios.post('http://localhost:8000/store/create',{
-            withCredentials:true,
-            headers:{
-              authorization: `${localStorage.getItem('token')}`
+        const res = await axios.post(
+            'http://localhost:8000/store/products/create',
+            {
+                modelname,
+                name,
+                useroutid,
+                type,
+                color,
+                weight,
+                height,
+                expiry,
+                quantity,
+                _status
             },
-            body:{
-                modelname, name, useroutid, type, color, weight, height, expiry, quantity, _status
+            {
+                withCredentials: true,
+                headers: {
+                    authorization: `${localStorage.getItem('token')}`
+                }
             }
-            
-          })
+        )
 
-          navigate('/admin/users')
+
+          navigate('/store/products')
 
         
         

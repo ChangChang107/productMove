@@ -11,7 +11,9 @@ export default function Login() {
   const login =async ()=>{
     const res = await axios.post('http://localhost:8000/login',{
       email,password
-    })
+    }, {
+      withCredentials: true
+    }) 
       console.log(res)
       let token = res.data.payload.token
       console.log(token)
@@ -48,7 +50,7 @@ export default function Login() {
             </div>
             <div class="space-y-4">
                 <input type="text" placeholder="Email Addres" class="block text-sm py-3 px-4 rounded-lg w-full border outline-none" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-                <input type="text" placeholder="Password" class="block text-sm py-3 px-4 rounded-lg w-full border outline-none" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                <input type="password" placeholder="Password" class="block text-sm py-3 px-4 rounded-lg w-full border outline-none" value={password} onChange={(e)=>setPassword(e.target.value)}/>
             </div>
 			<div class="text-center mt-6">
 				    <button class="inline-flex gap-x-2 items-center py-2.5 px-6 text-white bg-green-500 rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:bg-green-600 focus:ring-offset-1" onClick={login}>Login</button>

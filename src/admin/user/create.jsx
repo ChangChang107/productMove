@@ -17,18 +17,27 @@ export default function CreateUser() {
     const [role,setRole]=useState('')
 
     const create =async ()=>{
-        const res = await axios.post('http://localhost:8000/admin/create',{
-            withCredentials:true,
-            headers:{
-              authorization: `${localStorage.getItem('token')}`
+        const res = await axios.post(
+            'http://localhost:8000/admin/create',
+            {
+                name,
+                email,
+                password,
+                role
+                
             },
-            name,
-            email,
-            password,
-            role
-          })
+            {
+                withCredentials: true,
+                headers: {
+                    authorization: `${localStorage.getItem('token')}`
+                }
+            }
+        )
+
 
           navigate('/admin/users')
+
+        
         
     }
 
@@ -93,7 +102,11 @@ export default function CreateUser() {
             </div>
             <div>
                 <button
-                class="mr-5 mt-5 mb-5 hover:shadow-form rounded-md bg-green-500 py-3 px-8 text-base font-semibold text-white outline-none" onClick={create}
+                class="mr-5 mt-5 mb-5 hover:shadow-form rounded-md bg-green-500 py-3 px-8 text-base font-semibold text-white outline-none" onClick={(e)=>{
+                    e.preventDefault()
+
+                    create()
+                }}
                 >
                 Create
                 </button>

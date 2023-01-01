@@ -11,7 +11,6 @@ import AdminDashboard from "./admin/dashboard/Dashboard";
 import AdminProducts from "./admin/product/Products";
 import Users from "./admin/user/Users";
 import CreateUser from "./admin/user/create";
-import EditUser from "./admin/user/edit";
 import EditProduct from "./admin/product/edit";
 import ServiceDashboard from "./_service/dashboard/Dashboard";
 import ServiceProducts from "./_service/product/Products";
@@ -40,7 +39,6 @@ function App() {
             <Route path="products" element={<AdminProducts />} />
             <Route path="users" element={<Users />} />
             <Route path="create" element={<CreateUser />} />
-            <Route path="users/edit" element={<EditUser />} />
             <Route path="products/edit" element={<EditProduct />} />
           </Route>
           <Route path="/service" element={<Layout />}>
