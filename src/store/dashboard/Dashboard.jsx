@@ -15,63 +15,13 @@ const COLORS2 = ['#c57792','#77c5bf', '#0088FE', '#00C49F','#d62728', '#FFBB28',
 
 export default function StoreDashboard() {
 
-	const[textInput01, setTextInput01] = useState("");
-	const[textInput02, setTextInput02] = useState("");
+	const[textInput01, setTextInput01] = useState("12-2022");
+	const[textInput02, setTextInput02] = useState("2022");
 
 	console.log(getData3())
 
 	return (
 		<>
-		{/* <div className="flex gap-4 mb-5">
-				<BoxWrapper>
-					<div className="rounded-full h-12 w-12 flex items-center justify-center bg-sky-500">
-						<IoBagHandle className="text-2xl text-white" />
-					</div>
-					<div className="pl-4">
-						<span className="text-sm text-gray-500 font-light">Total Sales</span>
-						<div className="flex items-center">
-							<strong className="text-xl text-gray-700 font-semibold">$54232</strong>
-							<span className="text-sm text-green-500 pl-2">+343</span>
-						</div>
-					</div>
-				</BoxWrapper>
-				<BoxWrapper>
-					<div className="rounded-full h-12 w-12 flex items-center justify-center bg-orange-600">
-						<IoPieChart className="text-2xl text-white" />
-					</div>
-					<div className="pl-4">
-						<span className="text-sm text-gray-500 font-light">Total Expenses</span>
-						<div className="flex items-center">
-							<strong className="text-xl text-gray-700 font-semibold">$3423</strong>
-							<span className="text-sm text-green-500 pl-2">-343</span>
-						</div>
-					</div>
-				</BoxWrapper>
-				<BoxWrapper>
-					<div className="rounded-full h-12 w-12 flex items-center justify-center bg-yellow-400">
-						<IoPeople className="text-2xl text-white" />
-					</div>
-					<div className="pl-4">
-						<span className="text-sm text-gray-500 font-light">Total Customers</span>
-						<div className="flex items-center">
-							<strong className="text-xl text-gray-700 font-semibold">12313</strong>
-							<span className="text-sm text-red-500 pl-2">-30</span>
-						</div>
-					</div>
-				</BoxWrapper>
-				<BoxWrapper>
-					<div className="rounded-full h-12 w-12 flex items-center justify-center bg-green-600">
-						<IoCart className="text-2xl text-white" />
-					</div>
-					<div className="pl-4">
-						<span className="text-sm text-gray-500 font-light">Total Orders</span>
-						<div className="flex items-center">
-							<strong className="text-xl text-gray-700 font-semibold">16432</strong>
-							<span className="text-sm text-red-500 pl-2">-43</span>
-						</div>
-					</div>
-				</BoxWrapper>
-		</div> */}
 		
 		<div className="grid lg:grid-cols-2 gap-5 mb-5">
 			<div className="rounded bg-white h-96 shadow-sm">
@@ -121,12 +71,12 @@ export default function StoreDashboard() {
 			<div className="rounded bg-white h-96 shadow-sm">
 				<div className='pl-10 pt-24 items-center h-80'> 
 					<ResponsiveContainer width="80%" aspect={2}>
-						<BarChart width={50} height={20} data={DATA}>
-							<XAxis dataKey="date" tickFormatter={monthTickFormatter} />
+						<BarChart width={50} height={20} data={DATA03}>
+							<XAxis dataKey="date"  />
 							<CartesianGrid strokeDasharray="3 3" />
 							<YAxis />
 							<Tooltip />
-							<Bar dataKey="uv" fill="#22c55e" />
+							<Bar dataKey="numberProduct" fill="#22c55e" />
 						</BarChart>
 					</ResponsiveContainer>
 				</div>
@@ -171,7 +121,7 @@ export default function StoreDashboard() {
 							/>
 							<YAxis />
 							<Tooltip />
-							<Bar dataKey="uv" fill="#ea580c" />
+							<Bar dataKey="numberProduct" fill="#ea580c" />
 						</BarChart>
 					</ResponsiveContainer>
 				</div>
@@ -268,7 +218,12 @@ const getData2 = (textInput) => {
 	let data11 = 0;
 	let data12 = 0;
 	
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=1&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 1,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`
@@ -278,7 +233,12 @@ const getData2 = (textInput) => {
 	}).catch(err => {
 		console.log(err)
 	});
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=2&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 2,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`
@@ -288,7 +248,12 @@ const getData2 = (textInput) => {
 	}).catch(err => {
 		console.log(err)
 	});
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=3&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 3,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`
@@ -298,7 +263,12 @@ const getData2 = (textInput) => {
 	}).catch(err => {
 		console.log(err)
 	});
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=4&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 4,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`
@@ -308,7 +278,12 @@ const getData2 = (textInput) => {
 	}).catch(err => {
 		console.log(err)
 	});
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=5&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 5,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`
@@ -318,7 +293,12 @@ const getData2 = (textInput) => {
 	}).catch(err => {
 		console.log(err)
 	});
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=6&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 6,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`
@@ -328,7 +308,12 @@ const getData2 = (textInput) => {
 	}).catch(err => {
 		console.log(err)
 	});
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=7&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 7,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`
@@ -338,7 +323,12 @@ const getData2 = (textInput) => {
 	}).catch(err => {
 		console.log(err)
 	});
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=8&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 8,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`
@@ -348,7 +338,12 @@ const getData2 = (textInput) => {
 	}).catch(err => {
 		console.log(err)
 	});
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=9&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 9,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`
@@ -358,7 +353,12 @@ const getData2 = (textInput) => {
 	}).catch(err => {
 		console.log(err)
 	});
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=10&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 10,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`
@@ -368,7 +368,12 @@ const getData2 = (textInput) => {
 	}).catch(err => {
 		console.log(err)
 	});
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=11&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 11,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`
@@ -378,7 +383,12 @@ const getData2 = (textInput) => {
 	}).catch(err => {
 		console.log(err)
 	});
-	axios.get('http://localhost:8000/store/products/product-out-month?year=2022&month=12&status=3', {
+	axios.get('http://localhost:8000/store/products/product-out-month?', {
+		params: {
+			year: year,
+			month: 12,
+			status: 3
+		  },
 		withCredentials:true,
 		headers:{
 		'authorization': `${localStorage.getItem('token')}`

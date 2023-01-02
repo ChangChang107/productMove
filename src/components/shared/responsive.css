@@ -1,0 +1,21 @@
+@media (max-width: 1023px) {
+    .sidebar{
+        width:0px;
+        opacity:0;
+        padding:0;
+        
+    }
+    .rounded-lg{
+        width:100%;
+        margin:0;
+    }.rounded{
+        padding-top: 10px;
+        padding:10px;
+        height:auto;
+    }
+}
+
+.menu-btn{
+    position: absolute;
+    padding:10px 15px;
+}

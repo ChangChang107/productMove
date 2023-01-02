@@ -24,7 +24,7 @@ export default function CreateServiceProduct() {
 
     const create =async ()=>{
         const res = await axios.post(
-            'http://localhost:8000/service/products/create',
+            'http://localhost:8000/service/product/create',
             {
                 modelname,
                 name,
